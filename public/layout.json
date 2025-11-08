@@ -1,0 +1,9 @@
+{
+  "grid": [
+    [["red"], ["red", "yellow", "blue"]],
+    [["red", "yellow"], ["blue", "yellow"]],
+    [["red", "yellow", "blue"], ["red"]]
+  ],
+  "rows": 3,
+  "cols": 3
+}

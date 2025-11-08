@@ -1,26 +1,37 @@
-import { BoxGeometry, Color, Mesh, MeshBasicMaterial, PerspectiveCamera } from 'three';
+import { AmbientLight, Color, DirectionalLight, PerspectiveCamera, Vector3 } from 'three';
 
 import { appEventEmitter, Scene, type Size } from '@/shared';
+import { GameFieldController } from '@/widgets';
 
 export class MainScene extends Scene {
   private camera!: PerspectiveCamera;
 
-  private createCube() {
-    const geometry = new BoxGeometry( 1, 1, 1 );
-    const material = new MeshBasicMaterial( { color: 0x00ff00 } );
-    const cube = new Mesh( geometry, material );
+  private field!: GameFieldController;
 
-    return cube;
+  private async createField() {
+    const response = await fetch('/layout.json');
+    const layout = await response.json();
+
+    this.field = new GameFieldController(layout);
   }
 
-  protected create() {
+  protected async create() {
     this.camera = new PerspectiveCamera(75, 1, 0.1, 1000);
-    const cube = this.createCube();
-    this.camera.position.z = 5;
+    this.camera.position.y = 5;
+    this.camera.position.z = 2;
 
-    this.scene.background = new Color('#b8b8b8');
+    this.camera.lookAt(new Vector3(0, 0, 0));
 
-    this.scene.add(this.camera, cube);
+    this.scene.background = new Color('#c0fdf8');
+
+    await this.createField();
+
+    const light = new AmbientLight(0xffffff, 0.8);
+
+    const dir = new DirectionalLight(0xffffff, 1);
+    dir.position.set(3, 6, 2);
+
+    this.scene.add(this.camera, this.field.view, light, dir);
   }
 
   load() {}

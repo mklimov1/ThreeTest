@@ -18,12 +18,15 @@ export class App {
 
   public async init(node: HTMLElement) {
     this.node = node;
-    this.renderer = new WebGLRenderer();
+    this.renderer = new WebGLRenderer({
+      antialias: true,
+    });
 
     const scenes: Scenes = {
       main: MainScene,
     };
 
+    this.renderer.setPixelRatio(window.devicePixelRatio);
     this.sceneManager.init(scenes, this.renderer, node);
   }
 
