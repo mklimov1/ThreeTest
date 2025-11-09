@@ -10,19 +10,31 @@ export class Field extends Group {
 
   private cols!: number;
 
+  private wrapper!: Group;
+
+  private addBases() {
+    const bases = generateBase(this.rows, this.cols);
+    const rightmostBase = this.rows > 1 ? bases[this.cols * 2 - 1] : bases[this.cols - 1];
+
+    this.wrapper.position.y = (bases[0].position.y + bases[bases.length - 1].position.y) / 2;
+    this.wrapper.position.x = (bases[0].position.x - rightmostBase.position.x) / 2;
+
+    this.wrapper.add(...bases);
+  }
+
   public init(rows: number, cols: number) {
     this.rows = rows;
     this.cols = cols;
 
-    const bases = generateBase(this.rows, this.cols);
-
-    this.add(...bases);
+    this.wrapper = new Group();
+    this.add(this.wrapper);
+    this.addBases();
   }
 
   public create(...tiles: Tile[]) {
     const renderTiles = this.fill(...tiles);
 
-    this.add(...renderTiles);
+    this.wrapper.add(...renderTiles);
   }
 
   private fill(...tiles: Tile[]) {
