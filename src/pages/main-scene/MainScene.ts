@@ -17,9 +17,9 @@ export class MainScene extends Scene {
 
   protected async create() {
     this.camera = new PerspectiveCamera(75, 1, 0.1, 1000);
-    this.camera.position.y = 5;
-    this.camera.position.z = 2;
 
+    this.camera.position.y = 5;
+    this.camera.position.z = 5;
     this.camera.lookAt(new Vector3(0, 0, 0));
 
     this.scene.background = new Color('#c0fdf8');
