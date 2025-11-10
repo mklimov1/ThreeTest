@@ -1,9 +1,12 @@
 {
-  "grid": [
-    [["red"], ["red", "yellow", "blue"]],
-    [["red", "yellow"], ["blue", "yellow"]],
-    [["red", "yellow", "blue"], ["red"]]
-  ],
+  "grid": {
+    "0_0": ["red", "yellow", "blue"],
+    "1_0": ["red"],
+    "2_0": ["red", "yellow"],
+    "0_1": ["blue", "yellow"],
+    "1_2": ["red", "yellow", "blue"],
+    "2_2": ["blue", "red"]
+  },
   "rows": 3,
   "cols": 3,
   "colors": ["red", "yellow", "blue"]

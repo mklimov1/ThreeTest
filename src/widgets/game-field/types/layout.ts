@@ -1,5 +1,5 @@
 export type Layout = {
-  grid: string[][][];
+  grid: Record<string, string[]>;
   rows: number;
   cols: number;
   colors: string[];

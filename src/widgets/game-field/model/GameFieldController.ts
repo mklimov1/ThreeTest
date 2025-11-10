@@ -22,6 +22,8 @@ export class GameFieldController {
     this.scene.init(layout.rows, layout.cols);
 
     this.subscribeEvents();
+
+    this.fieldStore.fillByLayout(layout);
   }
 
   private addTile(tiles: Tile[]) {

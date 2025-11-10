@@ -34,6 +34,12 @@ export class FieldStore extends EventEmitter<Events> {
     this.tileBar = [[], [], []];
   }
 
+  public fillByLayout({ grid }: Layout) {
+    Object.entries(grid).forEach(([columnId, colors]) => {
+      this.addTiles(columnId, ...colors);
+    });
+  }
+
   addTiles(columnId: string, ...colors: string[]) {
     const column = this.getColumnById(columnId);
     if (!column) return;
