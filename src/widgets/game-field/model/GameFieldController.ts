@@ -1,19 +1,34 @@
-import { Store } from './Store';
-import { Field } from '../ui/Field';
+import { FieldStore } from './FieldStore';
+import { FieldScene } from '../ui/FieldScene';
 
-import type { Layout } from '../lib/generateGrid';
+import type { Tile } from '../lib';
+import type { Layout } from '../types';
 
 export class GameFieldController {
-  private store: Store;
+  private fieldStore: FieldStore;
 
-  public view: Field;
+  public scene: FieldScene;
 
   constructor(layout: Layout) {
-    this.store = new Store();
-    this.store.init(layout);
+    this.fieldStore = new FieldStore();
+    this.scene = new FieldScene();
 
-    this.view = new Field();
-    this.view.init(layout.rows, layout.cols);
-    this.view.create(...this.store.getTiles());
+    this.setup(layout);
+  }
+
+  private setup(layout: Layout) {
+    this.fieldStore.init(layout);
+
+    this.scene.init(layout.rows, layout.cols);
+
+    this.subscribeEvents();
+  }
+
+  private addTile(tiles: Tile[]) {
+    this.scene.addTiles(...tiles);
+  }
+
+  private subscribeEvents() {
+    this.fieldStore.on('addTile', this.addTile, this);
   }
 }

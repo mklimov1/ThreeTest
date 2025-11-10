@@ -13,6 +13,8 @@ export class MainScene extends Scene {
     const layout = await response.json();
 
     this.field = new GameFieldController(layout);
+
+    this.field.scene.position.z = -3;
   }
 
   protected async create() {
@@ -31,7 +33,7 @@ export class MainScene extends Scene {
     const dir = new DirectionalLight(0xffffff, 1);
     dir.position.set(3, 6, 2);
 
-    this.scene.add(this.camera, this.field.view, light, dir);
+    this.scene.add(this.camera, this.field.scene, light, dir);
   }
 
   load() {}

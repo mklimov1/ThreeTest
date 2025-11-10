@@ -1,48 +1,17 @@
 import { Column } from './entities/Column';
-import { Tile } from './entities/Tile';
 
 import type { Grid } from '../types';
 
-export type Layout = {
-  grid: string[][][];
-  rows: number;
-  cols: number;
-}
+export const generateGrid = (rows: number, cols: number): Grid => {
+  const grid: Grid = new Map();
 
-type GridData = {
-  grid: Grid,
-  rows: number;
-  cols: number;
-  tileMap: Map<string, Tile>;
-}
+  for (let row = 0; row < rows; row++) {
 
-export const generateGrid = (layout: Layout): GridData => {
-  const grid: Grid = Array.from({ length: layout.rows }, () =>
-    Array(layout.cols).fill(new Column()));
-
-  const tileMap = new Map<string, Tile>();
-
-  for (let y = 0; y < layout.grid.length; y++) {
-    const row = layout.grid[y];
-
-    for (let x = 0; x < row.length; x++) {
-      const colors = row[x];
-      const tiles = colors.map((color, z) => {
-        const tile = new Tile(color, y, x, z);
-        tileMap.set(tile.id, tile);
-        return tile;
-      });
-      const column = grid[y][x];
-
-      column.addTile(...tiles);
+    for (let col = 0; col < cols; col++) {
+      const column = new Column(row, col);
+      grid.set(`${row}_${col}`, column);
     }
-
   }
 
-  return {
-    grid,
-    tileMap,
-    rows: layout.rows,
-    cols: layout.cols,
-  };
+  return grid;
 };
